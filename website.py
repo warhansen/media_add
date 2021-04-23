@@ -1,4 +1,6 @@
+import requests
 from flask import Flask, render_template, render_template_string, request
+
 
 app = Flask(__name__)
 
@@ -27,8 +29,10 @@ def get_movies():
     if request.method == 'GET':
         return f"The URL /data is accessed directly. Try going to '/form' to submit form"
     if request.method == 'POST':
-        movie_name = request.form
-        return movie_name.get('movie_name')
+        movie_name = request.form.get('movie_name')
+        url = "media:7878/api/v3/movies?apiKey=10fc753d66e048009a1d7fbc3a8f8053"
+        params = {'title': movie_name}
+        return request.args.get(url)
 
 @app.route('/series/')
 def series():
